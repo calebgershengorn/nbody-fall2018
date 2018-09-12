@@ -1,6 +1,6 @@
 
 /**
- * @author YOUR NAME THE STUDENT IN 201
+ * @author Caleb Gershengorn
  * 
  * Simulation program for the NBody assignment
  */
