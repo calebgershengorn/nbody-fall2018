@@ -1,6 +1,6 @@
 
 public class Body {
-	// creates instance variables//
+	// creates instance variables
 	private double myXPos;
 	private double myYPos;
 	private double myXVel;
@@ -8,7 +8,14 @@ public class Body {
 	private double myMass;
 	private String myFileName;
 	
-	//creates the original Body object with parameters
+	/** Creates a body from parameters
+	 * @param xp initial X position
+	 * @param yp initial Y position
+	 * @param xv initial X velocity
+	 * @param yv initial Y velocity
+	 * @param mass of object
+	 * @param fileName of object for animation
+	 */
 	public Body(double xp, double yp, double xv, double yv, double mass, String fileName) {
 		myXPos = xp;
 		myYPos = yp;
@@ -18,6 +25,10 @@ public class Body {
 		myFileName = fileName;
 	}
 	//creates the Body object from an existing Body
+	/**Copy constructor: copy instance variables 
+	 * from one body to the other
+	 * @param b used to initalize the body
+	 */
 	public Body(Body b) {
 		myXPos = b.myXPos;
 		myYPos = b.myYPos;
@@ -50,7 +61,11 @@ public class Body {
 	public String getName() {
 		return this.myFileName;
 	}
-	//calculates the distance between multiple bodies
+	/**
+	 * 
+	 * @param b is the body passed to calcDistance 
+	 * @return distance between two bodies
+	 */
 	public double calcDistance(Body b) {
 		double dx = (b.myXPos - myXPos);
 		double dy = (b.myYPos - myYPos);
@@ -58,27 +73,43 @@ public class Body {
 		return r;
 	}
 
-	//calculates the total force between two bodies
+	/**
+	 * 
+	 * @param p is the body passed to calcForceExertedBy 
+	 * @return calculates the total force due to gravity between two bodies
+	 */
 	public double calcForceExertedBy(Body p) {
 		double force = ((6.67 * 1e-11) * myMass * p.myMass) / (this.calcDistance(p) * this.calcDistance(p));
 		return force;
 	}
 	
-	//calculates the sum of the forces in the X direction
+	/**
+	 * 
+	 * @param p is the body passed to calcForceExertedByX
+	 * @return the X component of the force between the two bodies
+	 */
 	public double calcForceExertedByX(Body p) {
 		double fx;
 		fx = this.calcForceExertedBy(p) * (p.myXPos - myXPos) / (this.calcDistance(p));
 		return fx;
 	}
 
-	//calculates the sum of the forces in the Y direction
+	/**
+	 * 
+	 * @param p is the body passed to calcForceExertedByY
+	 * @return the Y component of the force between the two bodies
+	 */
 	public double calcForceExertedByY(Body p) {
 		double fy;
 		fy = this.calcForceExertedBy(p) * (p.myYPos - myYPos) / (this.calcDistance(p));
 		return fy;
 	}
 
-	//calculates the sum of the forces in the X direction, minus the force of the body on itself
+	/**
+	 * calculates the sum of all the forces in the X direction
+	 * @param array of bodies
+	 * @return total X forces without the body acting on itself
+	 */
 	public double calcNetForceExertedByX(Body[] bodies) {
 		double totalForceX = 0;
 		for (Body b : bodies) {
@@ -89,7 +120,11 @@ public class Body {
 		return totalForceX;
 	}
 
-	//calculates the sum of the forces in the Y direction, minus the force of the body on itself
+	/**
+	 * calculates the sum of all the forces in the Y direction
+	 * @param array of bodies
+	 * @return total Y forces without the body acting on itself
+	 */
 	public double calcNetForceExertedByY(Body[] bodies) {
 		double totalForceY = 0;
 		for (Body b : bodies) {
@@ -100,7 +135,12 @@ public class Body {
 		return totalForceY;
 	}
 
-	//mutator function, updates the position and velocity of the bodies
+	/**
+	 * Mutator function: changes the value of the X and Y position and 
+	 * @param deltaT is the time between cycles 
+	 * @param xForce is the total force in the X direction
+	 * @param yForce is the total force in the X direction
+	 */
 	public void update(double deltaT, double xForce, double yForce) {
 		double ax = xForce / myMass;
 		double ay = yForce / myMass;
@@ -113,7 +153,9 @@ public class Body {
 		myXVel = nvx;
 		myYVel = nvy;
 	}
-	//draws the bodies
+	/**
+	 * redraws the Bodies
+	 */
 	public void draw() {
 		StdDraw.picture(myXPos,myYPos,"images/"+myFileName);
 	}
